@@ -1,39 +1,22 @@
 
 public class Availability {
 	
-	private final int EIGHT = 8;
-	private final int TEN = 10;
-	private final int FORTEEN = 14;
-	private final int SIXTEEN = 16;
-
-	public static enum weekDays {
-		j1, 
-		j2;
-	}
-	
-	public static enum beginHour {
-		EIGHT,
-		TEN,
-		FOURTEEN,
-		SIXTEEN;
-	}
-	
-	private weekDays day;
+	private WeekDays day;
 	private int beginning;
 	private int end;
 	
-	public Availability(weekDays day, beginHour beginning) {
+	public Availability(WeekDays day, BeginHour beginning) {
 		super();
 		this.day = day;
-		this.beginning = beginning.ordinal();
-		this.end = beginning.ordinal() + 2;
+		this.beginning = beginning.get();
+		this.end = beginning.get() +  2;
 	}
 
-	public weekDays getDay() {
+	public WeekDays getDay() {
 		return day;
 	}
 
-	public void setDay(weekDays day) {
+	public void setDay(WeekDays day) {
 		this.day = day;
 	}
 

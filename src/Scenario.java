@@ -18,16 +18,16 @@ public class Scenario {
 		
 		// Creating availabilities
 		ArrayList<Availability> u1 = new ArrayList<Availability>();
-		u1.add(new Availability(Availability.weekDays.j1, Availability.beginHour.SIXTEEN));
-		u1.add(new Availability(Availability.weekDays.j2, Availability.beginHour.FOURTEEN));
+		u1.add(new Availability(WeekDays.j1, BeginHour.SIXTEEN));
+		u1.add(new Availability(WeekDays.j2, BeginHour.FOURTEEN));
 		
 		ArrayList<Availability> u2 = new ArrayList<Availability>();
-		u2.add(new Availability(Availability.weekDays.j1, Availability.beginHour.SIXTEEN));
-		u2.add(new Availability(Availability.weekDays.j2, Availability.beginHour.TEN));
+		u2.add(new Availability(WeekDays.j1, BeginHour.SIXTEEN));
+		u2.add(new Availability(WeekDays.j2, BeginHour.TEN));
 		
 		ArrayList<Availability> u3 = new ArrayList<Availability>();
-		u3.add(new Availability(Availability.weekDays.j1, Availability.beginHour.FOURTEEN));
-		u3.add(new Availability(Availability.weekDays.j2, Availability.beginHour.EIGHT));
+		u3.add(new Availability(WeekDays.j1, BeginHour.FOURTEEN));
+		u3.add(new Availability(WeekDays.j2, BeginHour.EIGHT));
 		
 		
 		//Creating new teachers

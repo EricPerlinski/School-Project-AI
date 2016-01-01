@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.Iterator;
+import java.util.Set;
 
 
 public class Teacher {
@@ -39,33 +42,36 @@ public class Teacher {
 		this.material = material;
 	}
 
-	/* Init availabilities */ 
+	/* Init availabilities => add all possible availability to the availability list of the teacher, it doesn't add availabilities that are in the unavailability list */ 
 	
 	public void initTeacherAvailabilities() {
 		
 		this.availabilities = new ArrayList<Availability>();
-		this.availabilities.add(new Availability(Availability.weekDays.j1, Availability.beginHour.EIGHT));
-		this.availabilities.add(new Availability(Availability.weekDays.j1, Availability.beginHour.TEN));
-		this.availabilities.add(new Availability(Availability.weekDays.j1, Availability.beginHour.FOURTEEN));
-		this.availabilities.add(new Availability(Availability.weekDays.j1, Availability.beginHour.SIXTEEN));
-		this.availabilities.add(new Availability(Availability.weekDays.j2, Availability.beginHour.EIGHT));
-		this.availabilities.add(new Availability(Availability.weekDays.j2, Availability.beginHour.TEN));
-		this.availabilities.add(new Availability(Availability.weekDays.j2, Availability.beginHour.FOURTEEN));
-		this.availabilities.add(new Availability(Availability.weekDays.j2, Availability.beginHour.SIXTEEN));
-		for (Availability availability : unavailabilities) {
-			removeAvailability(availability.getDay(), availability.getBeginning());
+		Set<WeekDays> weekdays = EnumSet.allOf(WeekDays.class);
+		Set<BeginHour> beginhour = EnumSet.allOf(BeginHour.class);
+		for (Iterator<WeekDays> iterator = weekdays.iterator(); iterator.hasNext();) {
+			WeekDays wd = iterator.next();
+			for (Iterator<BeginHour> iterator2 = beginhour.iterator(); iterator2.hasNext();) {
+				BeginHour bh = iterator2.next();
+				boolean found = false;
+				for (Availability availability : unavailabilities) {
+					if(!(availability.getDay() == wd) && !(availability.getBeginning() == bh.get())) 
+						found = true;
+				}
+				if(!found) addAvailability(wd, bh);				
+			}
 		}
 	}
 	
-	public void removeAvailability (Availability.weekDays wd, Availability.beginHour bh) {
+	public void removeAvailability (WeekDays wd, BeginHour bh) {
 		for (Availability availability : availabilities) {
-			if (availability.getDay() == wd && availability.getBeginning() == bh.ordinal() && availability.getEnd() == bh.ordinal()+2){
+			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
 				availabilities.remove(availability);
 			}
 		}
 	}
 	
-	public void removeAvailability (Availability.weekDays wd, int bh) {
+	public void removeAvailability (WeekDays wd, int bh) {
 		for (Availability availability : availabilities) {
 			if (availability.getDay() == wd && availability.getBeginning() == bh && availability.getEnd() == bh +2){
 				availabilities.remove(availability);
@@ -73,17 +79,15 @@ public class Teacher {
 		}
 	}
 	
-	public void addAvailability (Availability.weekDays wd, Availability.beginHour bh) {
-		boolean notfound = true;
+	public void addAvailability (WeekDays wd, BeginHour bh) {
+		boolean found = false;
 		for (Availability availability : availabilities) {
-			if (availability.getDay() == wd && availability.getBeginning() == bh.ordinal() && availability.getEnd() == bh.ordinal()+2){
-				notfound = false;
+			if (!(availability.getDay() == wd) && !(availability.getBeginning() == bh.get()) && !(availability.getEnd() == bh.get()+2)){
+				found = true;
 			}
 		}
 		
-		if(notfound){
-			availabilities.add(new Availability(wd, bh));
-		}
+		if(!found) availabilities.add(new Availability(wd, bh));
 	}
 	/* Getters & Setters */
 	
