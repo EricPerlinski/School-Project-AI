@@ -10,6 +10,13 @@ public class Teacher {
 	
 	/* Constructors */ 
 	
+	public Teacher() {
+		this.unavailabilities = null;
+		this.availabilities = null;
+		this.skills = null;
+		this.material = null;
+	}
+	
 	public Teacher(ArrayList<Availability> unAvailabilities) {
 		this.unavailabilities = unAvailabilities;
 		this.initTeacherAvailabilities();

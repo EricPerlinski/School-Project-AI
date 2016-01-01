@@ -5,7 +5,14 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-
+		Teacher t1 = new Teacher();
+		Teacher t2 = new Teacher();
+		Teacher t3 = new Teacher();
+		basicScenario(t1,t2,t3);
+	
+	}
+	
+	public static void basicScenario(Teacher t1, Teacher t2, Teacher t3){
 		// Creating availabilities
 		ArrayList<Availability> u1 = new ArrayList<Availability>();
 		u1.add(new Availability(Availability.weekDays.j1, Availability.beginHour.SIXTEEN));
@@ -21,9 +28,9 @@ public class Main {
 		
 		
 		//Creating new teachers
-		Teacher t1 = new Teacher (u1);
-		Teacher t2 = new Teacher (u2);
-		Teacher t3 = new Teacher (u3);
+		t1 = new Teacher (u1);
+		t2 = new Teacher (u2);
+		t3 = new Teacher (u3);
 		
 		//Adding the skills 
 		t1.setSkills(new ArrayList<Teaching>(Arrays.asList(new Teaching("English", 12))));
@@ -37,6 +44,6 @@ public class Main {
 		
 		//Creating Rooms
 		//TODO
-		
+	
 	}
 }
