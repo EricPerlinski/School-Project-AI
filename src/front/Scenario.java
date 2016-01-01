@@ -83,7 +83,9 @@ public class Scenario {
 		
 		//Creating student groups
 		
-		
+		AS.add(new Students("s1"));
+		AS.add(new Students("s2"));
+		AS.add(new Students("s3"));
 		
 	}
 	
@@ -107,6 +109,15 @@ public class Scenario {
 		for (Room r : AR){
 			returnString += r.toString();
 		}
+		
+		returnString += "--------------------------------------------\n"
+			      + "    Student groups : \n"
+				  + "--------------------------------------------\n";
+	
+		for (Students s : AS){
+			returnString += s.toString();
+		}
+		
 		return returnString;
 	}
 

@@ -2,7 +2,7 @@ package model;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.Set;
 
 import tools.BeginHour;
@@ -13,7 +13,7 @@ import tools.WeekDays;
 public class Room {
 	
 	private String name;
-	private Map<Availability,Teaching> roomTimeTable;
+	private HashMap<Availability,Teaching> roomTimeTable;
 	private ArrayList<Availability> roomUnAvailabilities;
 	private ArrayList<Availability> roomAvailabilities;
 	private ArrayList<Equipment> roomEquipment;
@@ -125,11 +125,11 @@ public class Room {
 		this.roomEquipment = roomEquipment;
 	}
 
-	public Map<Availability,Teaching> getRoomTimeTable() {
+	public HashMap<Availability,Teaching> getRoomTimeTable() {
 		return roomTimeTable;
 	}
 
-	public void setRoomTimeTable(Map<Availability,Teaching> roomTimeTable) {
+	public void setRoomTimeTable(HashMap<Availability,Teaching> roomTimeTable) {
 		this.roomTimeTable = roomTimeTable;
 	}
 
