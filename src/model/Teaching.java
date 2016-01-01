@@ -1,3 +1,4 @@
+package model;
 
 public class Teaching {
 
@@ -25,6 +26,11 @@ public class Teaching {
 
 	public void setTimeVolume(int timeVolume) {
 		this.timeVolume = timeVolume;
+	}
+
+	@Override
+	public String toString() {
+		return "("+name+","+timeVolume+"h)";
 	}
 
 	

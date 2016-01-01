@@ -1,4 +1,7 @@
+package model;
 import java.util.ArrayList;
+
+import tools.Equipment;
 
 
 public class Room {

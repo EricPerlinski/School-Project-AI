@@ -1,7 +1,12 @@
+package model;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Iterator;
 import java.util.Set;
+
+import tools.BeginHour;
+import tools.Equipment;
+import tools.WeekDays;
 
 
 public class Teacher {
@@ -55,7 +60,7 @@ public class Teacher {
 				BeginHour bh = iterator2.next();
 				boolean found = false;
 				for (Availability availability : unavailabilities) {
-					if(!(availability.getDay() == wd) && !(availability.getBeginning() == bh.get())) 
+					if(availability.getDay() == wd && availability.getBeginning() == bh.get()) 
 						found = true;
 				}
 				if(!found) addAvailability(wd, bh);				
@@ -82,13 +87,15 @@ public class Teacher {
 	public void addAvailability (WeekDays wd, BeginHour bh) {
 		boolean found = false;
 		for (Availability availability : availabilities) {
-			if (!(availability.getDay() == wd) && !(availability.getBeginning() == bh.get()) && !(availability.getEnd() == bh.get()+2)){
+			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
 				found = true;
 			}
 		}
 		
 		if(!found) availabilities.add(new Availability(wd, bh));
 	}
+	
+	
 	/* Getters & Setters */
 	
 	public ArrayList<Availability> getAvailabilities() {
@@ -122,7 +129,34 @@ public class Teacher {
 	public void setUnavailabilities(ArrayList<Availability> unavailabilities) {
 		this.unavailabilities = unavailabilities;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		String returnString = "Teacher \n"
+							+ "\n              unavailabilities = "; 
+		for (Availability availability : unavailabilities){
+			returnString +=   "(" + availability;
+		}
+		returnString +=       "\n              availabilities = ";	
+		for (Availability availability : unavailabilities){
+			returnString +=   "(" + availability;
+		}
+		returnString +=       "\n              skills = ";
+		for (Teaching t : skills){
+			returnString += t + " ";
+		}
+		
+		if(material.isEmpty()) {
+			returnString +=   "\n              No equipment needed \n";
+		}else {
+			returnString +=   "\n              equipment needed = ";
+			
+			for (Equipment e : material) {
+				returnString += e.name() + ",";
+			}
+		}
+		
+		
+		return returnString+"\n";
+	}
 }

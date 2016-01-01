@@ -1,5 +1,14 @@
+package front;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import model.Availability;
+import model.Room;
+import model.Teacher;
+import model.Teaching;
+import tools.BeginHour;
+import tools.Equipment;
+import tools.WeekDays;
 
 public class Scenario {
 	
@@ -16,7 +25,7 @@ public class Scenario {
 
 	public void basicScenario(){
 		
-		// Creating availabilities
+		// Creating unAvailabilities
 		ArrayList<Availability> u1 = new ArrayList<Availability>();
 		u1.add(new Availability(WeekDays.j1, BeginHour.SIXTEEN));
 		u1.add(new Availability(WeekDays.j2, BeginHour.FOURTEEN));
@@ -55,6 +64,28 @@ public class Scenario {
 	}
 	
 	
+	@Override
+	public String toString() {
+		
+		String returnString =   "Scenario\n"
+							  + "--------------------------------------------\n"
+							  + "    Teachers : \n"
+							  + "--------------------------------------------\n";
+		
+		for (Teacher t : AT) {
+			returnString += t.toString();
+		}
+		
+		returnString += "--------------------------------------------\n"
+				      + "    Rooms : \n"
+					  + "--------------------------------------------\n";
+		
+		for (Room r : AR){
+			returnString += r.toString();
+		}
+		return returnString;
+	}
+
 	/* Setters & Getters */
 	public ArrayList<Room> getAR() {
 		return AR;

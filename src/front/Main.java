@@ -1,3 +1,4 @@
+package front;
 
 public class Main {
 
@@ -6,6 +7,8 @@ public class Main {
 		/* Create a basic scenario with teachers, rooms, equipments, availabilities and student groups */
 		Scenario S1 = new Scenario();
 		S1.basicScenario();
+		
+		System.out.println(S1.toString());
 	
 	}
 	

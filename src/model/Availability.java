@@ -1,3 +1,6 @@
+package model;
+import tools.BeginHour;
+import tools.WeekDays;
 
 public class Availability {
 	
@@ -34,6 +37,11 @@ public class Availability {
 
 	public void setEnd(int end) {
 		this.end = end;
+	}
+
+	@Override
+	public String toString() {
+		return "("+ day.name() + "," + beginning + " - " + end + ")";
 	}
 	
 	
