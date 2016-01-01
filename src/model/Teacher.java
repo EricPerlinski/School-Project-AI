@@ -11,6 +11,7 @@ import tools.WeekDays;
 
 public class Teacher {
 
+	private String name;
 	private ArrayList<Availability> unavailabilities;
 	private ArrayList<Availability> availabilities;
 	private ArrayList<Teaching> skills;
@@ -18,33 +19,37 @@ public class Teacher {
 	
 	/* Constructors */ 
 	
-	public Teacher() {
+	public Teacher(String name) {
 		this.unavailabilities = null;
 		this.availabilities = null;
 		this.skills = null;
 		this.material = null;
+		this.setName(name);
 	}
 	
-	public Teacher(ArrayList<Availability> unAvailabilities) {
+	public Teacher(String name, ArrayList<Availability> unAvailabilities) {
 		this.unavailabilities = unAvailabilities;
 		this.initTeacherAvailabilities();
 		this.skills = null;
 		this.material = null;
+		this.setName(name);
 	}
 	
-	public Teacher(ArrayList<Availability> unAvailabilities, ArrayList<Teaching> skills, ArrayList<Equipment> material) {
+	public Teacher(String name, ArrayList<Availability> unAvailabilities, ArrayList<Teaching> skills, ArrayList<Equipment> material) {
 		this.unavailabilities = unAvailabilities;
 		this.initTeacherAvailabilities();
 		this.skills = skills;
 		this.material = material;
+		this.setName(name);
 	}
 	
-	public Teacher(ArrayList<Availability> unavailabilities, ArrayList<Availability> availabilities, ArrayList<Teaching> skills, ArrayList<Equipment> material) {
+	public Teacher(String name, ArrayList<Availability> unavailabilities, ArrayList<Availability> availabilities, ArrayList<Teaching> skills, ArrayList<Equipment> material) {
 		super();
 		this.unavailabilities = unavailabilities;
 		this.availabilities = availabilities;
 		this.skills = skills;
 		this.material = material;
+		this.setName(name);
 	}
 
 	/* Init availabilities => add all possible availability to the availability list of the teacher, it doesn't add availabilities that are in the unavailability list */ 
@@ -132,7 +137,7 @@ public class Teacher {
 
 	@Override
 	public String toString() {
-		String returnString = "Teacher \n"
+		String returnString = "Teacher "+name+"\n"
 							+ "\n              unavailabilities = "; 
 		for (Availability availability : unavailabilities){
 			returnString +=   "(" + availability;
@@ -158,5 +163,13 @@ public class Teacher {
 		
 		
 		return returnString+"\n";
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

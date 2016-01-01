@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import model.Availability;
 import model.Room;
+import model.Students;
 import model.Teacher;
 import model.Teaching;
 import tools.BeginHour;
@@ -14,6 +15,7 @@ public class Scenario {
 	
 	private ArrayList<Teacher> AT;
 	private ArrayList<Room> AR;
+	private ArrayList<Students> AS;
 	
 	
 	/* Constructors */ 
@@ -21,6 +23,7 @@ public class Scenario {
 		super();
 		this.setAT(new ArrayList<Teacher>());
 		this.setAR(new ArrayList<Room>());
+		this.setAS(new ArrayList<Students>());
 	}
 
 	public void basicScenario(){
@@ -40,9 +43,9 @@ public class Scenario {
 		
 		
 		//Creating new teachers
-		Teacher t1 = new Teacher (u1);
-		Teacher t2 = new Teacher (u2);
-		Teacher t3 = new Teacher (u3);
+		Teacher t1 = new Teacher ("t1", u1);
+		Teacher t2 = new Teacher ("t2", u2);
+		Teacher t3 = new Teacher ("t3", u3);
 		
 		//Adding the skills 
 		t1.setSkills(new ArrayList<Teaching>(Arrays.asList(new Teaching("English", 12))));
@@ -59,8 +62,29 @@ public class Scenario {
 		AT.add(t3);
 		
 		//Creating Rooms
-		//TODO
+		ArrayList<Availability> ur1 = new ArrayList<Availability>();
+		ur1.add(new Availability(WeekDays.j1, BeginHour.TEN));
+		
+		ArrayList<Availability> ur2 = new ArrayList<Availability>();
+		ur2.add(new Availability(WeekDays.j2, BeginHour.EIGHT));
+		ur2.add(new Availability(WeekDays.j2, BeginHour.SIXTEEN));
+		
+		ArrayList<Availability> ur3 = new ArrayList<Availability>();
+		ur3.add(new Availability(WeekDays.j1, BeginHour.FOURTEEN));
+		ur3.add(new Availability(WeekDays.j2, BeginHour.SIXTEEN));
+		
+		Room r1 = new Room("r1", ur1, new ArrayList<Equipment>(Arrays.asList(Equipment.retroprojecteur,Equipment.tableau,Equipment.videoprojecteur,Equipment.salleTP)));
+		Room r2 = new Room("r2", ur2, new ArrayList<Equipment>(Arrays.asList(Equipment.retroprojecteur,Equipment.tableau,Equipment.videoprojecteur,Equipment.salleTP)));
+		Room r3 = new Room("r3", ur3, new ArrayList<Equipment>(Arrays.asList(Equipment.retroprojecteur,Equipment.tableau,Equipment.videoprojecteur,Equipment.salleTP)));
 	
+		AR.add(r1);
+		AR.add(r2);
+		AR.add(r3);
+		
+		//Creating student groups
+		
+		
+		
 	}
 	
 	
@@ -101,6 +125,14 @@ public class Scenario {
 
 	public void setAT(ArrayList<Teacher> aT) {
 		AT = aT;
+	}
+
+	public ArrayList<Students> getAS() {
+		return AS;
+	}
+
+	public void setAS(ArrayList<Students> aS) {
+		AS = aS;
 	}
 	
 	
