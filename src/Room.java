@@ -3,18 +3,10 @@ import java.util.ArrayList;
 
 public class Room {
 	
-	private enum Equipment {
-		videoprojecteur,
-		retroprojecteur,
-		salleTP,
-		tableau;
-	}
-	
 	private ArrayList<Availability> roomAvailabilities;
 	private ArrayList<Equipment> roomEquipment;
 	
-	public Room(ArrayList<Availability> roomAvailabilities,
-			ArrayList<Equipment> roomEquipment) {
+	public Room(ArrayList<Availability> roomAvailabilities,	ArrayList<Equipment> roomEquipment) {
 		super();
 		this.roomAvailabilities = roomAvailabilities;
 		this.roomEquipment = roomEquipment;
