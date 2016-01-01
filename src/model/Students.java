@@ -1,6 +1,8 @@
 package model;
 import java.util.HashMap;
 
+import tools.Lecture;
+
 
 public class Students {
 

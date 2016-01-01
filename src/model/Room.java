@@ -7,6 +7,7 @@ import java.util.Set;
 
 import tools.BeginHour;
 import tools.Equipment;
+import tools.Teaching;
 import tools.WeekDays;
 
 

@@ -1,4 +1,6 @@
-package model;
+package tools;
+
+import model.Room;
 
 public class Lecture {
 	private Room r;

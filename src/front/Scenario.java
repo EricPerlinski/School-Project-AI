@@ -6,9 +6,9 @@ import model.Availability;
 import model.Room;
 import model.Students;
 import model.Teacher;
-import model.Teaching;
 import tools.BeginHour;
 import tools.Equipment;
+import tools.Teaching;
 import tools.WeekDays;
 
 public class Scenario {

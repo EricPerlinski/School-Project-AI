@@ -1,4 +1,4 @@
-package model;
+package tools;
 
 public class Teaching {
 
