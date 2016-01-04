@@ -74,6 +74,18 @@ public class Teacher {
 		}
 	}
 	
+	public void addAvailability (WeekDays wd, BeginHour bh) {
+		boolean found = false;
+		for (Availability availability : availabilities) {
+			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
+				found = true;
+			}
+		}
+		
+		if(!found) availabilities.add(new Availability(wd, bh));
+	}
+	
+	
 	public void removeAvailability (WeekDays wd, BeginHour bh) {
 		for (Availability availability : availabilities) {
 			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
@@ -90,17 +102,7 @@ public class Teacher {
 		}
 	}
 	
-	public void addAvailability (WeekDays wd, BeginHour bh) {
-		boolean found = false;
-		for (Availability availability : availabilities) {
-			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
-				found = true;
-			}
-		}
-		
-		if(!found) availabilities.add(new Availability(wd, bh));
-	}
-	
+
 	
 	/* Getters & Setters */
 	
@@ -144,7 +146,7 @@ public class Teacher {
 			returnString +=   "(" + availability;
 		}
 		returnString +=       "\n              availabilities = ";	
-		for (Availability availability : unavailabilities){
+		for (Availability availability : availabilities){
 			returnString +=   "(" + availability;
 		}
 		returnString +=       "\n              skills = ";

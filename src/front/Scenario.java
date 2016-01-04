@@ -17,7 +17,6 @@ public class Scenario {
 	private ArrayList<Room> AR;
 	private ArrayList<Students> AS;
 	
-	
 	/* Constructors */ 
 	public Scenario(){
 		super();
@@ -145,6 +144,9 @@ public class Scenario {
 	public void setAS(ArrayList<Students> aS) {
 		AS = aS;
 	}
+	
+	
+	
 	
 	
 }

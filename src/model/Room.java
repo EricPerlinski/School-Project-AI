@@ -51,6 +51,17 @@ public class Room {
 		}
 	}
 	
+	public void addAvailability (WeekDays wd, BeginHour bh) {
+		boolean found = false;
+		for (Availability availability : roomAvailabilities) {
+			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
+				found = true;
+			}
+		}
+		
+		if(!found) roomAvailabilities.add(new Availability(wd, bh));
+	}
+	
 	public void removeAvailability (WeekDays wd, BeginHour bh) {
 		for (Availability availability : roomAvailabilities) {
 			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
@@ -67,16 +78,7 @@ public class Room {
 		}
 	}
 	
-	public void addAvailability (WeekDays wd, BeginHour bh) {
-		boolean found = false;
-		for (Availability availability : roomAvailabilities) {
-			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
-				found = true;
-			}
-		}
-		
-		if(!found) roomAvailabilities.add(new Availability(wd, bh));
-	}
+
 	
 	
 	/* Getters & Setters */
