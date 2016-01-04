@@ -1,30 +1,33 @@
 package tools;
 
-import model.Room;
+import model.Students;
+import model.Teacher;
 
 public class Lecture {
-	private Room r;
-	private Teaching t;
 	
-	Lecture(Room r, Teaching t){
-		this.setR(r);
+	private Students s;
+	private Teacher t;
+	
+	Lecture(Teacher t, Students s){
+		this.setS(s);
 		this.setT(t);
-		
 	}
 
-	public Room getR() {
-		return r;
+	public Students getS() {
+		return s;
 	}
 
-	public void setR(Room r) {
-		this.r = r;
+	public void setS(Students s) {
+		this.s = s;
 	}
+	
 
-	public Teaching getT() {
+
+	public Teacher getT() {
 		return t;
 	}
 
-	public void setT(Teaching t) {
+	public void setT(Teacher t) {
 		this.t = t;
 	}
 }

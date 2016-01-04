@@ -1,6 +1,7 @@
 package front;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import model.Availability;
 import model.Room;
@@ -10,6 +11,7 @@ import tools.BeginHour;
 import tools.Equipment;
 import tools.Teaching;
 import tools.WeekDays;
+import tools.Lecture;
 
 public class Scenario {
 	
@@ -114,7 +116,18 @@ public class Scenario {
 				  + "--------------------------------------------\n";
 	
 		for (Students s : AS){
-			returnString += s.toString();
+			returnString += s.toString() + "\n";
+			
+			for(Room r: AR) {
+				HashMap<Availability,Lecture> timetable = r.getTimeTable();
+				
+					for (HashMap.Entry<Availability, Lecture> entry : timetable.entrySet())
+					{
+					    System.out.println("Time : " + entry.getKey() + "/ Teacher : " + entry.getValue().getT()+ "/ Room : " + r + "\n");
+					}
+				
+			}
+			returnString += "\n";
 		}
 		
 		return returnString;
@@ -144,7 +157,8 @@ public class Scenario {
 	public void setAS(ArrayList<Students> aS) {
 		AS = aS;
 	}
-	
+
+
 	
 	
 	

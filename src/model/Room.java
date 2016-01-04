@@ -1,23 +1,23 @@
 package model;
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
 
 import tools.BeginHour;
 import tools.Equipment;
-import tools.Teaching;
+import tools.Lecture;
 import tools.WeekDays;
 
 
 public class Room {
 	
 	private String name;
-	private HashMap<Availability,Teaching> roomTimeTable;
 	private ArrayList<Availability> roomUnAvailabilities;
 	private ArrayList<Availability> roomAvailabilities;
 	private ArrayList<Equipment> roomEquipment;
+	private HashMap<Availability,Lecture> timeTable;
 	
 	
 	/* Constructors */
@@ -27,10 +27,33 @@ public class Room {
 		this.setRoomUnAvailabilities(roomUnAvailabilities);
 		this.initRoomAvailabilities();
 		this.roomEquipment = roomEquipment;
+		this.setTimeTable(new HashMap<Availability,Lecture>());
 	}
 
 	
 	/* Methods */
+	
+	
+	
+	public boolean addLecture(Availability a, Lecture l) {
+		if (timeTable.containsKey(a)){
+			timeTable.put(a, l);
+			return true;
+		}
+		return false;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public void initRoomAvailabilities() {
 		
@@ -51,17 +74,6 @@ public class Room {
 		}
 	}
 	
-	public void addAvailability (WeekDays wd, BeginHour bh) {
-		boolean found = false;
-		for (Availability availability : roomAvailabilities) {
-			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
-				found = true;
-			}
-		}
-		
-		if(!found) roomAvailabilities.add(new Availability(wd, bh));
-	}
-	
 	public void removeAvailability (WeekDays wd, BeginHour bh) {
 		for (Availability availability : roomAvailabilities) {
 			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
@@ -78,7 +90,16 @@ public class Room {
 		}
 	}
 	
-
+	public void addAvailability (WeekDays wd, BeginHour bh) {
+		boolean found = false;
+		for (Availability availability : roomAvailabilities) {
+			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
+				found = true;
+			}
+		}
+		
+		if(!found) roomAvailabilities.add(new Availability(wd, bh));
+	}
 	
 	
 	/* Getters & Setters */
@@ -128,14 +149,6 @@ public class Room {
 		this.roomEquipment = roomEquipment;
 	}
 
-	public HashMap<Availability,Teaching> getRoomTimeTable() {
-		return roomTimeTable;
-	}
-
-	public void setRoomTimeTable(HashMap<Availability,Teaching> roomTimeTable) {
-		this.roomTimeTable = roomTimeTable;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -154,6 +167,13 @@ public class Room {
 		this.roomUnAvailabilities = roomUnAvailabilities;
 	}
 	
+	public HashMap<Availability, Lecture> getTimeTable() {
+		return timeTable;
+	}
+
+	public void setTimeTable(HashMap<Availability, Lecture> timeTable) {
+		this.timeTable = timeTable;
+	}
 	
 	
 	
