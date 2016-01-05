@@ -1,24 +1,24 @@
 package tools;
 
-import model.Students;
+import model.Room;
 import model.Teacher;
 
 public class Lecture {
 	
-	private Students s;
+	private Room r;
 	private Teacher t;
 	
-	Lecture(Teacher t, Students s){
-		this.setS(s);
+	Lecture(Teacher t, Room r){
+		this.setR(r);
 		this.setT(t);
 	}
 
-	public Students getS() {
-		return s;
+	public Room getR() {
+		return r;
 	}
 
-	public void setS(Students s) {
-		this.s = s;
+	public void setR(Room r) {
+		this.r = r;
 	}
 	
 

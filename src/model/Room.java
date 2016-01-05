@@ -1,13 +1,11 @@
 package model;
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
 import tools.BeginHour;
 import tools.Equipment;
-import tools.Lecture;
 import tools.WeekDays;
 
 
@@ -17,7 +15,7 @@ public class Room {
 	private ArrayList<Availability> roomUnAvailabilities;
 	private ArrayList<Availability> roomAvailabilities;
 	private ArrayList<Equipment> roomEquipment;
-	private HashMap<Availability,Lecture> timeTable;
+	
 	
 	
 	/* Constructors */
@@ -27,31 +25,11 @@ public class Room {
 		this.setRoomUnAvailabilities(roomUnAvailabilities);
 		this.initRoomAvailabilities();
 		this.roomEquipment = roomEquipment;
-		this.setTimeTable(new HashMap<Availability,Lecture>());
+		
 	}
 
 	
 	/* Methods */
-	
-	
-	
-	public boolean addLecture(Availability a, Lecture l) {
-		if (timeTable.containsKey(a)){
-			timeTable.put(a, l);
-			return true;
-		}
-		return false;
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	
@@ -166,16 +144,6 @@ public class Room {
 	public void setRoomUnAvailabilities(ArrayList<Availability> roomUnAvailabilities) {
 		this.roomUnAvailabilities = roomUnAvailabilities;
 	}
-	
-	public HashMap<Availability, Lecture> getTimeTable() {
-		return timeTable;
-	}
-
-	public void setTimeTable(HashMap<Availability, Lecture> timeTable) {
-		this.timeTable = timeTable;
-	}
-	
-	
-	
+		
 
 }

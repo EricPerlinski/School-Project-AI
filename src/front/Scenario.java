@@ -89,8 +89,7 @@ public class Scenario {
 		AS.add(new Students("s3"));
 		
 	}
-	
-	
+
 	@Override
 	public String toString() {
 		
@@ -118,15 +117,18 @@ public class Scenario {
 		for (Students s : AS){
 			returnString += s.toString() + "\n";
 			
-			for(Room r: AR) {
-				HashMap<Availability,Lecture> timetable = r.getTimeTable();
+			HashMap<Availability,Lecture> timetable = s.getTimeTable();
 				
-					for (HashMap.Entry<Availability, Lecture> entry : timetable.entrySet())
-					{
-					    System.out.println("Time : " + entry.getKey() + "/ Teacher : " + entry.getValue().getT()+ "/ Room : " + r + "\n");
-					}
-				
+			if(timetable.isEmpty()){
+				returnString += "              no time table\n";
 			}
+			
+			for (HashMap.Entry<Availability, Lecture> entry : timetable.entrySet())
+			{
+				System.out.println("              Time : " + entry.getKey() + "/ Teacher : " + entry.getValue().getT()+ "/ Room : " + entry.getValue().getR() + "\n");
+			}
+			
+			
 			returnString += "\n";
 		}
 		
@@ -159,6 +161,7 @@ public class Scenario {
 	}
 
 
+	
 	
 	
 	
