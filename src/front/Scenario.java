@@ -1,7 +1,12 @@
 package front;
+
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.PriorityQueue;
+
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import model.Availability;
 import model.Room;
@@ -9,9 +14,9 @@ import model.Students;
 import model.Teacher;
 import tools.BeginHour;
 import tools.Equipment;
+import tools.Lecture;
 import tools.Teaching;
 import tools.WeekDays;
-import tools.Lecture;
 
 public class Scenario {
 	
@@ -117,16 +122,7 @@ public class Scenario {
 		for (Students s : AS){
 			returnString += s.toString() + "\n";
 			
-			HashMap<Availability,Lecture> timetable = s.getTimeTable();
-				
-			if(timetable.isEmpty()){
-				returnString += "              no time table\n";
-			}
 			
-			for (HashMap.Entry<Availability, Lecture> entry : timetable.entrySet())
-			{
-				System.out.println("              Time : " + entry.getKey() + "/ Teacher : " + entry.getValue().getT()+ "/ Room : " + entry.getValue().getR() + "\n");
-			}
 			
 			
 			returnString += "\n";
@@ -162,10 +158,72 @@ public class Scenario {
 		AS = aS;
 	}
 
+	private class Node implements Comparable<Node> {
+	      
+	      public int h;
+	      ArrayList<Students> ArrayListOfStudents;
+	      public int value;
+	      
+	      
+	      public Node() {
+	    	 Students stemp1 = new Students("stemp1");
+	    	 Students stemp2 = new Students("stemp2");
+	    	 Students stemp3 = new Students("stemp3");
+	    	 ArrayListOfStudents = new ArrayList<Students>(Arrays.asList(stemp1,stemp2,stemp3));
+	    	 value = 0;
+	      }
+	      
+	      public Node(Node parent) {
+	         h = parent.h + 1;
+	         ArrayListOfStudents = new ArrayList<Students>(parent.ArrayListOfStudents);
+	         value = parent.value;
+	      }
 
+		@Override
+		public int compareTo(Node arg0) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+	 }
 	
 	
-	
-	
-	
+	 public void solveBranchAndBound() {
+	      
+		  Node best = new Node();
+	      Node root = new Node();
+	      
+	      PriorityQueue<Node> q = new PriorityQueue<Node>();
+	      q.offer(root);
+	      
+	      while (!q.isEmpty()) {
+	    	  Node node = q.poll();
+	    	  Node tmp = new Node(node);
+	    	  if(tmp.ArrayListOfStudents.get(0).getTimeTable().get(new Availability(WeekDays.j1,BeginHour.EIGHT)) == null){
+	    		  tmp.ArrayListOfStudents.get(0).getTimeTable().put(new Availability(WeekDays.j1,BeginHour.EIGHT),new Lecture(AT.get(0),AR.get(0)));
+	          
+	    	  	System.err.println("Node.h "+tmp.h+" / "+tmp.value);
+	    	  
+	    	  }
+	    	  
+	    	  //if(node.value >= best.value && node.h < node.ArrayListOfStudents.size()*8 -1){
+	    		  for(Students e : node.ArrayListOfStudents){
+	    			  System.err.println("	"+e.getName());
+	    			  for (HashMap.Entry<Availability, Lecture> entry : e.getTimeTable().entrySet())
+	    				{
+	    				  System.err.println("		"+entry.getKey());
+	    					if(entry.getValue() == null){
+	    						for(Room tempRoom : AR){
+	    							for(Teacher tempTeacher : AT){
+	    								if(tempRoom.getRoomAvailabilities().contains(entry.getKey()) && tempTeacher.getAvailabilities().contains(entry.getKey())){
+	    										System.err.println(tempRoom+"-"+tempTeacher);
+	    								}
+	    								System.err.println("			"+tempRoom.getName()+"-"+tempTeacher.getName());
+	    							}
+	    						}
+	    					}
+	    				}
+	    		  }
+	    	  //}
+	      }
+	}
 }

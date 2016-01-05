@@ -9,13 +9,15 @@ public class Lecture {
 	private Room r;
 	private Teacher t;
 	
-	Lecture(Teacher t, Room r){
+	public Lecture(Teacher t, Room r){
 		this.setR(r);
 		this.setT(t);
 		this.setValue(0);
 		for(Equipment e : t.getMaterial()){
 			if(r.getRoomEquipment().contains(e)){
 				this.setValue(this.getValue()+1);
+			}else{
+				this.setValue(this.getValue()-1);
 			}
 		}
 	}
