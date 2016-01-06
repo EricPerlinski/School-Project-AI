@@ -1,9 +1,10 @@
 package tools;
 
+import model.Availability;
 import model.Room;
 import model.Teacher;
 
-public class Lecture {
+public class Lecture implements Cloneable{
 	
 	private int value;
 	private Room r;
@@ -44,5 +45,10 @@ public class Lecture {
 
 	public void setValue(int value) {
 		this.value = value;
+	}
+	
+	public Lecture clone() {
+		Lecture l = new Lecture(this.getT(),this.getR());
+		return l;
 	}
 }

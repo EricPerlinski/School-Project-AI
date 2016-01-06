@@ -21,10 +21,10 @@ public class Teacher {
 	/* Constructors */ 
 	
 	public Teacher(String name) {
-		this.unavailabilities = null;
-		this.availabilities = null;
-		this.skills = null;
-		this.material = null;
+		this.unavailabilities = new ArrayList<Availability>();
+		this.availabilities = new ArrayList<Availability>();
+		this.skills = new ArrayList<Teaching>();
+		this.material = new ArrayList<Equipment>();
 		this.setName(name);
 	}
 	
@@ -74,6 +74,25 @@ public class Teacher {
 		}
 	}
 	
+	public boolean isTeacherAvailable(WeekDays wd,BeginHour bh){
+		for(Availability a : availabilities){
+			//System.err.println("     wd : " + wd + " - bh : "+bh+" - bh.get() : "+bh.get()+" / a.getDay() : "+a.getDay()+" - a.getBeginning() : " + a.getBeginning() );
+			if(a.getDay() == wd && a.getBeginning() == bh.get()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean isTeacherAvailable(Availability a){
+		for(Availability availability : availabilities){
+			//System.err.println("     wd : " + a.getDay() + " - bh : "+a.getBeginning()+"  / a.getDay() : "+availability.getDay()+" - a.getBeginning() : " + availability.getBeginning() );
+			if(a.getDay() == availability.getDay() && a.getBeginning() == availability.getBeginning()){
+				return true;
+			}
+		}
+		return false;
+	}
 	public void addAvailability (WeekDays wd, BeginHour bh) {
 		boolean found = false;
 		for (Availability availability : availabilities) {
@@ -91,6 +110,14 @@ public class Teacher {
 			if (availability.getDay() == wd && availability.getBeginning() == bh.get() && availability.getEnd() == bh.get()+2){
 				availabilities.remove(availability);
 			}
+		}
+	}
+	
+	public void removeAvailability (Availability a) {
+		for (int i=0;i<availabilities.size();i++) {
+			if (availabilities.get(i).getDay() == a.getDay() && a.getBeginning() == availabilities.get(i).getBeginning()){
+				availabilities.remove(i);
+			}    
 		}
 	}
 	
@@ -174,5 +201,23 @@ public class Teacher {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+
+	public Teacher clone(){
+		Teacher t = new Teacher(this.name);
+		for(Availability a : this.availabilities){
+			t.availabilities.add(a.clone());
+		}
+		for(Availability a : this.unavailabilities){
+			t.unavailabilities.add(a.clone());
+		}
+		for(Equipment e : this.material){
+			t.material.add(e);
+		}
+		for(Teaching teach : this.skills){
+			t.skills.add(teach.clone());
+		}
+		return t;
 	}
 }

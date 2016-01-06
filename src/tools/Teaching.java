@@ -1,6 +1,6 @@
 package tools;
 
-public class Teaching {
+public class Teaching implements Cloneable{
 
 	private String name;
 	
@@ -33,8 +33,8 @@ public class Teaching {
 		return "("+name+","+timeVolume+"h)";
 	}
 
-	
-	
-	
-	
+	public Teaching clone(){
+		Teaching t = new Teaching(this.name,this.timeVolume);
+		return t;
+	}
 }

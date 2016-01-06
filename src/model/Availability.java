@@ -2,7 +2,7 @@ package model;
 import tools.BeginHour;
 import tools.WeekDays;
 
-public class Availability {
+public class Availability implements Cloneable{
 	
 	private WeekDays day;
 	private int beginning;
@@ -13,6 +13,13 @@ public class Availability {
 		this.day = day;
 		this.beginning = beginning.get();
 		this.end = beginning.get() +  2;
+	}
+	
+	public Availability(WeekDays day, int beginning) {
+		super();
+		this.day = day;
+		this.beginning = beginning;
+		this.end = beginning +  2;
 	}
 
 	public WeekDays getDay() {
@@ -44,6 +51,9 @@ public class Availability {
 		return "("+ day.name() + "," + beginning + " - " + end + ")";
 	}
 	
-	
+	public Availability clone() {
+		Availability a = new Availability(this.day,this.beginning);
+		return a;
+	}
 	
 }

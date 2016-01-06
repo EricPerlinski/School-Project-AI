@@ -9,7 +9,7 @@ import tools.BeginHour;
 import tools.Lecture;
 import tools.WeekDays;
 
-public class Students {
+public class Students implements Cloneable{
 
 	private String name;
 	private HashMap<Availability,Lecture> timeTable;
@@ -18,12 +18,8 @@ public class Students {
 		super();
 		this.setName(name);
 		this.initTimeTable();
-
-		
 	}
 	
-	/* Methods */
-
 	public void initTimeTable(){
 		this.timeTable = new HashMap<Availability,Lecture>();
 		
@@ -38,6 +34,30 @@ public class Students {
 		}	
 	}
 	
+	public boolean canAttendLecture(Teacher t){
+		int nbvalues = 0;
+		for (HashMap.Entry<Availability, Lecture> entry : timeTable.entrySet())
+		{
+			if(entry.getValue() == null){
+				
+			}else if(entry.getValue().getT().getName() == t.getName()){
+				nbvalues += 1;
+			}
+		}
+		return nbvalues < 2;
+	}
+	
+	public boolean canAttendLecture(){
+		int nullvalues = 0;
+		for (HashMap.Entry<Availability, Lecture> entry : timeTable.entrySet())
+		{
+			if(entry.getValue() == null){
+				nullvalues += 1;
+			}
+		}
+		return nullvalues > 2;
+	}
+	
 	public int getAllLectureValues(){	
 		int value = 0;
 		for (HashMap.Entry<Availability, Lecture> entry : timeTable.entrySet())
@@ -50,10 +70,15 @@ public class Students {
 	}
 	
 	public boolean addLecture(Availability a, Lecture l) {
-		if (timeTable.containsKey(a)){
-			timeTable.put(a, l);
-			return true;
+		for (HashMap.Entry<Availability, Lecture> entry : timeTable.entrySet())
+		{
+			if(entry.getKey().getDay() == a.getDay() && entry.getKey().getBeginning() == a.getBeginning()){
+				timeTable.put(entry.getKey(), l.clone());
+				return true;
+			}
 		}
+			
+		
 		return false;
 		
 	}
@@ -67,7 +92,7 @@ public class Students {
 		for (HashMap.Entry<Availability, Lecture> entry : timeTable.entrySet())
 		{
 			if(entry.getValue() != null){
-				returnString += "              Time : " + entry.getKey() + "	/ Teacher : " + entry.getValue().getT()+ "/ Room : " + entry.getValue().getR() + "\n";
+				returnString += "              Time : " + entry.getKey() + "	/ Teacher : " + entry.getValue().getT().getName()+ "/ Room : " + entry.getValue().getR().getName() + "\n";
 			}else {
 				returnString += "              Time : " + entry.getKey() + "	/ unassigned \n" ;
 			}
@@ -91,5 +116,16 @@ public class Students {
 
 	public void setTimeTable(HashMap<Availability,Lecture> timeTable) {
 		this.timeTable = timeTable;
+	}
+	
+	public Students clone() {
+		Students s = new Students(this.name);
+		s.initTimeTable();
+		for (HashMap.Entry<Availability, Lecture> entry : this.getTimeTable().entrySet()){
+			if(entry.getValue() != null){
+				s.addLecture(entry.getKey().clone(), entry.getValue().clone());
+			}
+		}
+		return s;
 	}
 }

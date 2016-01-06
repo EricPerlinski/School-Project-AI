@@ -1,12 +1,10 @@
 package front;
 
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.PriorityQueue;
-
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import model.Availability;
 import model.Room;
@@ -162,23 +160,82 @@ public class Scenario {
 	      
 	      public int h;
 	      ArrayList<Students> ArrayListOfStudents;
+	      ArrayList<Room> ArrayListOfRooms;
+	      ArrayList<Teacher> ArrayListOfTeachers;
+	      List<Node> childrens;
 	      public int value;
 	      
 	      
 	      public Node() {
-	    	 Students stemp1 = new Students("stemp1");
-	    	 Students stemp2 = new Students("stemp2");
-	    	 Students stemp3 = new Students("stemp3");
-	    	 ArrayListOfStudents = new ArrayList<Students>(Arrays.asList(stemp1,stemp2,stemp3));
+	    	 ArrayListOfStudents = new ArrayList<Students>();
+	    	 for(Students s : AS){
+	    		 Students stemp = s.clone();
+	    		 ArrayListOfStudents.add(stemp);
+	    	 }
+	    	 
+	    	 ArrayListOfRooms = new ArrayList<Room>();
+	    	 for(Room r : AR){
+	    		 Room rtemp = r.clone();
+	    		 ArrayListOfRooms.add(rtemp);
+	    	 }
+	    	 
+	    	 ArrayListOfTeachers = new ArrayList<Teacher>();
+	    	 for(Teacher t : AT){
+	    		 Teacher ttemp = t.clone();
+	    		 ArrayListOfTeachers.add(ttemp);
+	    	 }
+	    	 
+	    	 childrens = new ArrayList<Node>();
 	    	 value = 0;
 	      }
 	      
 	      public Node(Node parent) {
 	         h = parent.h + 1;
-	         ArrayListOfStudents = new ArrayList<Students>(parent.ArrayListOfStudents);
+	         ArrayListOfStudents = new ArrayList<Students>();
+	    	 for(Students s : parent.ArrayListOfStudents){
+	    		 Students stemp = s.clone();
+	    		 ArrayListOfStudents.add(stemp);
+	    	 }
+	    	 
+	    	 ArrayListOfRooms = new ArrayList<Room>();
+	    	 for(Room r : parent.ArrayListOfRooms){
+	    		 Room rtemp = r.clone();
+	    		 ArrayListOfRooms.add(rtemp);
+	    	 }
+	    	 
+	    	 ArrayListOfTeachers = new ArrayList<Teacher>();
+	    	 for(Teacher t : parent.ArrayListOfTeachers){
+	    		 Teacher ttemp = t.clone();
+	    		 ArrayListOfTeachers.add(ttemp);
+	    	 }
+	    	
 	         value = parent.value;
+	         childrens = new ArrayList<Node>();
 	      }
 
+	    public String toString(){
+	    	String returnString = "\n"
+	    						+ "\n"
+	    						+ "\n"
+	    						+ "===============================================\n"
+	    						+ " Node : h = " + h + "\n"
+	    						+ "===============================================\n";
+	    	
+	    	for(Students e : ArrayListOfStudents){
+	    		returnString += e.toString();
+	    	}
+	    	
+	    	/*for(Room i : ArrayListOfRooms){
+	    		returnString += i.toString();
+	    	}
+	    	
+	    	for(Teacher j : ArrayListOfTeachers){
+	    		returnString += j.toString();
+	    	}
+	    	*/
+	    	return returnString+"\n===============================================\n\n\n\n";
+	    }
+	      
 		@Override
 		public int compareTo(Node arg0) {
 			// TODO Auto-generated method stub
@@ -194,36 +251,60 @@ public class Scenario {
 	      
 	      PriorityQueue<Node> q = new PriorityQueue<Node>();
 	      q.offer(root);
-	      
+	      int nbnode = 0;
+	      int notexplored = 0;
 	      while (!q.isEmpty()) {
 	    	  Node node = q.poll();
-	    	  Node tmp = new Node(node);
-	    	  if(tmp.ArrayListOfStudents.get(0).getTimeTable().get(new Availability(WeekDays.j1,BeginHour.EIGHT)) == null){
-	    		  tmp.ArrayListOfStudents.get(0).getTimeTable().put(new Availability(WeekDays.j1,BeginHour.EIGHT),new Lecture(AT.get(0),AR.get(0)));
-	          
-	    	  	System.err.println("Node.h "+tmp.h+" / "+tmp.value);
-	    	  
-	    	  }
-	    	  
+	    	  if(node.h < 18){
 	    	  //if(node.value >= best.value && node.h < node.ArrayListOfStudents.size()*8 -1){
 	    		  for(Students e : node.ArrayListOfStudents){
-	    			  System.err.println("	"+e.getName());
-	    			  for (HashMap.Entry<Availability, Lecture> entry : e.getTimeTable().entrySet())
-	    				{
-	    				  System.err.println("		"+entry.getKey());
-	    					if(entry.getValue() == null){
-	    						for(Room tempRoom : AR){
-	    							for(Teacher tempTeacher : AT){
-	    								if(tempRoom.getRoomAvailabilities().contains(entry.getKey()) && tempTeacher.getAvailabilities().contains(entry.getKey())){
-	    										System.err.println(tempRoom+"-"+tempTeacher);
-	    								}
-	    								System.err.println("			"+tempRoom.getName()+"-"+tempTeacher.getName());
-	    							}
-	    						}
-	    					}
-	    				}
+	    			  if(!e.canAttendLecture()){
+	    				  System.out.println(node.h + " " +e.getName());
+	    			  }else{
+	    				  for (HashMap.Entry<Availability, Lecture> entry : e.getTimeTable().entrySet()){
+	    					  if(entry.getValue() == null){
+	    						  for(Room r : node.ArrayListOfRooms){
+	    							  for(Teacher t : node.ArrayListOfTeachers){
+	    								  if(r.isRoomAvailable(entry.getKey()) && t.isTeacherAvailable(entry.getKey()) && e.canAttendLecture(t) && node.h < 15){
+	    									  //System.out.println("OK Horaire : "+entry.getKey()+" / Etudiant : "+e.getName()+" / Room : "+r.getName()+"-"+r.isRoomAvailable(entry.getKey())+" / Teacher : "+t.getName()+"-"+t.isTeacherAvailable(entry.getKey()));
+	    									  Node tmp = new Node(node);
+	    									  for(Students x : tmp.ArrayListOfStudents){
+	    										  if(x.getName().equals(e.getName())){
+	    											  x.addLecture(entry.getKey(), new Lecture(t,r));
+	    										  }
+	    									  }
+	    									
+	    									  for(Room y : tmp.ArrayListOfRooms){
+	    										  if(y.getName().equals(r.getName())){
+	    											  y.removeAvailability(entry.getKey());
+	    										  }
+	    									  }
+	    									
+	    									  for(Teacher z : tmp.ArrayListOfTeachers){
+	    										  if(z.getName().equals(t.getName())){
+	    											  z.removeAvailability(entry.getKey());
+	    										  }
+	    									  }
+	    									  //System.out.println(tmp.toString());
+	    									  //tmp.ArrayListOfRooms.get(tmp.ArrayListOfRooms.indexOf(r)).removeAvailability(entry.getKey());
+	    									  //tmp.ArrayListOfTeachers.get(tmp.ArrayListOfTeachers.indexOf(t)).removeAvailability(entry.getKey());
+	    									  q.offer(tmp);
+	    									  nbnode++;
+	    									  //System.err.println(tmp.toString());
+	    								  }else{
+	    									  notexplored++;
+	    								  }
+	    								  
+	    							  }
+	    						  }
+	    					  }
+	    				  }
+	    			  }
 	    		  }
-	    	  //}
+	    		  System.out.println("Nodes : "+nbnode+" / Not explored : "+notexplored);
+	    	
+	    	  }
 	      }
+	      System.out.println("Nodes : "+nbnode+" / Not explored : "+notexplored);
 	}
 }
