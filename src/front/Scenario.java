@@ -257,19 +257,22 @@ public class Scenario {
 		q.offer(root);
 		int nbnode = 0;
 		int notexplored = 0;
+		int nbsolution = 0;
 		while (!q.isEmpty()) {
 			Node node = q.poll();
 			if(node.h < 18){
 				//if(node.value >= best.value && node.h < node.ArrayListOfStudents.size()*8 -1){
 				for(Students e : node.ArrayListOfStudents){
 					if(!e.canAttendLecture()){
-						System.out.println(node.nb + "    "+ node.h + "   " +e.getName());
+						//System.out.println(node.nb + "    "+ node.h + "   " +e.getName());
 					}else{
 						for(Room r : node.ArrayListOfRooms){
 							for(Teacher t : node.ArrayListOfTeachers){
 								for (HashMap.Entry<Availability, Lecture> entry : e.getTimeTable().entrySet()){
 									if(entry.getValue() == null){
-										if(r.isRoomAvailable() && r.isRoomAvailable(entry.getKey()) && t.isTeacherAvailable() && t.isTeacherAvailable(entry.getKey()) && e.canAttendLecture(t) && entry.getValue() == null && node.h < 18){
+										//if(r.isRoomAvailable() && r.isRoomAvailable(entry.getKey()) && t.isTeacherAvailable() && t.isTeacherAvailable(entry.getKey()) && e.canAttendLecture(t) && entry.getValue() == null && node.h < 18){
+										if( t.isTeacherAvailable() && t.isTeacherAvailable(entry.getKey()) && e.canAttendLecture(t) && entry.getValue() == null && node.h < 18){
+												
 											//System.out.println("OK Horaire : "+entry.getKey()+" / Etudiant : "+e.getName()+" / Room : "+r.getName()+"-"+r.isRoomAvailable(entry.getKey())+" / Teacher : "+t.getName()+"-"+t.isTeacherAvailable(entry.getKey()));
 											Node tmp = new Node(node);
 											for(Students x : tmp.ArrayListOfStudents){
@@ -278,18 +281,21 @@ public class Scenario {
 												}
 											}
 
-											for(Room y : tmp.ArrayListOfRooms){
-												if(y.getName().equals(r.getName())){
-													y.removeAvailability(entry.getKey());
-												}
-											}
+											//for(Room y : tmp.ArrayListOfRooms){
+											//	if(y.getName().equals(r.getName())){
+											//		y.removeAvailability(entry.getKey());
+											//	}
+											//}
 
 											for(Teacher z : tmp.ArrayListOfTeachers){
 												if(z.getName().equals(t.getName())){
 													z.removeAvailability(entry.getKey());
 												}
 											}
-											//System.out.println(tmp.toString());
+											if(tmp.h == 18){
+												nbsolution++;
+												System.out.println("Solution "+nbsolution+" : "+tmp.toString());
+											}
 											//tmp.ArrayListOfRooms.get(tmp.ArrayListOfRooms.indexOf(r)).removeAvailability(entry.getKey());
 											//tmp.ArrayListOfTeachers.get(tmp.ArrayListOfTeachers.indexOf(t)).removeAvailability(entry.getKey());
 											q.offer(tmp);
@@ -306,7 +312,7 @@ public class Scenario {
 					}
 
 				}
-				System.out.println("Nodes : "+nbnode+" / Not explored : "+notexplored);
+				//System.out.println("Qsize : "+ q.size()+ " Nodes : "+nbnode+" / Not explored : "+notexplored);
 
 			}	
 		}	
