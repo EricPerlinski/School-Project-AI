@@ -74,6 +74,10 @@ public class Teacher {
 		}
 	}
 	
+	public boolean isTeacherAvailable(){
+		return !availabilities.isEmpty();
+	}
+	
 	public boolean isTeacherAvailable(WeekDays wd,BeginHour bh){
 		for(Availability a : availabilities){
 			//System.err.println("     wd : " + wd + " - bh : "+bh+" - bh.get() : "+bh.get()+" / a.getDay() : "+a.getDay()+" - a.getBeginning() : " + a.getBeginning() );

@@ -70,6 +70,10 @@ public class Room implements Cloneable{
 		return false;
 	}
 	
+	public boolean isRoomAvailable(){
+		return !roomAvailabilities.isEmpty();
+	}
+	
 	public boolean isRoomAvailable(Availability a){
 		for(Availability availability : roomAvailabilities){
 			//System.err.println("     wd : " + a.getDay() + " - bh : "+a.getBeginning()+"  / a.getDay() : "+availability.getDay()+" - a.getBeginning() : " + availability.getBeginning() );
