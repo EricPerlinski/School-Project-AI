@@ -31,7 +31,7 @@ public class Students implements Cloneable{
 				BeginHour bh = iterator2.next();
 				this.timeTable.put(new Availability(wd, bh), null);
 			}
-		}	
+		}
 	}
 	
 	public boolean canAttendLecture(Teacher t){

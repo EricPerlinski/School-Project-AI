@@ -3,7 +3,6 @@ package front;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.PriorityQueue;
 
 import model.Availability;
@@ -161,6 +160,7 @@ public class Scenario {
 	private class Node implements Comparable<Node> {
 
 
+		@SuppressWarnings("unused")
 		public int nb;
 		public int h;
 		ArrayList<Students> ArrayListOfStudents;
@@ -250,6 +250,7 @@ public class Scenario {
 
 	public void solveBranchAndBound() {
 
+		@SuppressWarnings("unused")
 		Node best = new Node();
 		Node root = new Node();
 

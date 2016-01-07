@@ -1,6 +1,5 @@
 package tools;
 
-import model.Availability;
 import model.Room;
 import model.Teacher;
 
